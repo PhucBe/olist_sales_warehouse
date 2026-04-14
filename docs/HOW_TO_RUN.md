@@ -48,51 +48,59 @@ python -m src.ingestion.run_ingestion
 -->
 
 Step 12:
-
+dbt_project.yml + packages.yml + dbt/seeds/product_category_name_translation.csv
 -->
 
 Step 13:
-
+dbt/olist_dbt/models/staging/{_sources.yml,schema.yml}
+dbt/olist_dbt/models/staging/{stg_*.sql}
 -->
 
 Step 14:
-
+dbt/olist_dbt/models/core/{schema.yml,dim_*.sql,fact_order_items.sql}
 -->
 
 Step 15:
-
+dbt/olist_dbt/models/marts/{schema.yml,mart_*.sql}
 -->
 
 Step 16:
-
+dbt/profiles/profiles.yml
 -->
 
 Step 17:
-
+dbt debug --profiles-dir ../profiles
+dbt deps --profiles-dir ../profiles
+dbt seed --profiles-dir ../profiles
 -->
 
 Step 18:
-
+dbt run --select staging --profiles-dir ../profiles
+dbt test --select staging --profiles-dir ../profiles
 -->
 
 Step 19:
-
+dbt run --select core --profiles-dir ../profiles
+dbt test --select core --profiles-dir ../profiles
 -->
 
 Step 20:
-
+dbt run --select marts --profiles-dir ../profiles
+dbt test --select marts --profiles-dir ../profiles
 -->
 
 Step 21:
-
+dbt/tests/{staging.sql,core.sql,marts.sql}
 -->
 
 Step 22:
-
+dbt test --select path:tests/staging --profiles-dir ../profiles
+dbt test --select path:tests/core --profiles-dir ../profiles
+dbt test --select path:tests/marts --profiles-dir ../profiles
 -->
 
 Step 23:
-
+sql/check/{check_raw, check_staging, check_core, check_marts}
 -->
 
 Step 24:
