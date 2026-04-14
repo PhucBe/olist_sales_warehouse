@@ -24,7 +24,7 @@ config
 data/
 
 dbt_packages/
-dbt/profiles/
+dbt/profiles/profiles.yml
 target/
 logs/dbt.log
 
