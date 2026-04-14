@@ -104,9 +104,104 @@ sql/check/{check_raw, check_staging, check_core, check_marts}
 -->
 
 Step 24:
-
+curl -L "https://airflow.apache.org/docs/apache-airflow/3.1.8/docker-compose.yaml" -o docker-compose.yaml
 -->
 
 Step 25:
+{.env,requirements.txt,Dockerfile}
+-->
+
+Step 26:
+docker compose build
+-->
+
+Step 27:
+docker compose up airflow-init
+-->
+
+Step 28:
+docker compose up -d
+-->
+
+Step 29:
+dags/{olist_backfill_pipeline.py,olist_daily_pipeline.py}
+-->
+
+Step 30:
+{
+  "select": "path:models/marts",
+  "full_refresh": true
+}
+{
+  "select": "path:models/core",
+  "full_refresh": true
+}
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
+
+-->
+
+Step 26:
 
 -->
