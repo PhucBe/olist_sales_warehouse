@@ -1,0 +1,4 @@
+select *
+from {{ ref('dim_payment') }}
+where (payment_value is not null and payment_value < 0)
+   or (payment_installments is not null and payment_installments < 0)

@@ -24,6 +24,7 @@ config
 data/
 
 dbt_packages/
+dbt/profiles/
 target/
 logs/dbt.log
 

@@ -1,0 +1,171 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Customer dimension for Olist warehouse."
+    columns:
+      - name: customer_key
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_unique_id
+        tests:
+          - not_null
+
+  - name: dim_product
+    description: "Product dimension for Olist warehouse."
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          - unique
+
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_seller
+    description: "Seller dimension for Olist warehouse."
+    columns:
+      - name: seller_key
+        tests:
+          - not_null
+          - unique
+
+      - name: seller_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_date
+    description: "Date dimension derived from order purchase date."
+    columns:
+      - name: date_key
+        tests:
+          - not_null
+          - unique
+
+      - name: date_day
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_payment
+    columns:
+      - name:  payment_key
+        tests:
+          - not_null
+          - unique
+      - name: order_id
+        tests:
+          - not_null
+
+      - name: payment_sequential
+        tests:
+          - not_null
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - order_id
+              - payment_sequential
+
+  - name: dim_review
+    columns:
+      - name: review_key
+        tests:
+          - not_null
+          - unique
+
+      - name: review_id
+        tests:
+          - not_null
+
+      - name: order_id
+        tests:
+          - not_null
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - review_id
+              - order_id
+
+  - name: fact_order_items
+    description: "Core fact table at line-item grain: one row per order_id + order_item_id."
+    columns:
+      - name: order_item_key
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        tests:
+          - not_null
+
+      - name: order_item_id
+        tests:
+          - not_null
+
+      - name: customer_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+
+      - name: product_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_key
+
+      - name: seller_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_seller')
+                field: seller_key
+
+      - name: order_date_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: order_status
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - created
+                  - approved
+                  - invoiced
+                  - processing
+                  - shipped
+                  - delivered
+                  - unavailable
+                  - canceled
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - order_id
+              - order_item_id
