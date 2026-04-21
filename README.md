@@ -1,6 +1,6 @@
 # 🏗️ Data Warehouse & Mart Build: Production ETL Pipeline
 
-An end-to-end data engineering pipeline that transforms raw CSV files from Kaggle into a normalized star schema data warehouse, then builds analytical data marts.
+An end-to-end data engineering pipeline that transforms raw CSV files from Brazilian E-Commerce Public Dataset by Olist into a normalized star schema data warehouse, then builds analytical data marts.
 
 ![Data Pipeline Architecture](docs/screenshots/0.png)
 
@@ -18,11 +18,13 @@ An end-to-end data engineering pipeline that transforms raw CSV files from Kaggl
 
 ## 🧩 Problem & Context
 
-Raw job posting data arrives as flat CSV files in Google Cloud Storage—not structured for analytical queries. Analysts need to answer:
+The business needs a trusted analytics warehouse that can answer questions such as:
 
-- Which skills are most in-demand over time?
-- What are hiring trends by company and location?
-- How do salary patterns vary by role and skill?
+- revenue by day/month/quarter
+- top products and categories
+- seller performance
+- new vs. returning customers
+- service quality and delivery impact
 
 **Challenge:** Raw operational CSVs into a warehouse that is consistent, reusable, and safe for BI. That means preserving raw data for replay, standardizing source tables, choosing the correct fact grain, separating dimensions from facts, and exposing marts that are easy for dashboards to query. In this project, the chosen analytical grain is 1 row per order item, because it supports accurate revenue calculation and natural analysis by product, category, seller, customer, and date.
 
@@ -47,7 +49,7 @@ Raw job posting data arrives as flat CSV files in Google Cloud Storage—not str
 
 ![Data Pipeline Architecture](docs/screenshots/0.png)
 
-The pipeline transforms job posting CSVs from Kaggle into a normalized star schema data warehouse, then builds specialized analytical data marts. BI tools (Metabase, Power BI, Tableau, Python) consume from both the warehouse and marts.
+The pipeline transforms job posting CSVs from Brazilian E-Commerce Public Dataset by Olist into a normalized star schema data warehouse, then builds specialized analytical data marts. BI tools (Metabase, Power BI, Tableau, Python) consume from both the warehouse and marts.
 
 ### Data Warehouse
 

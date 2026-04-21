@@ -2,14 +2,10 @@
 -- check_bi.sql
 -- Mục đích:
 --   Kiểm tra 4 BI views đã được tạo đúng và dữ liệu ổn
--- Schema mặc định dưới đây: olist_sales_marts
--- Nếu schema của bạn là olist_dev_marts thì replace lại
 -- =========================================================
 
 
--- =========================================================
 -- 0) KIỂM TRA CÁC BI VIEWS CÓ TỒN TẠI KHÔNG
--- =========================================================
 SELECT
     table_schema,
     table_name
@@ -24,9 +20,7 @@ WHERE table_schema = 'olist_sales_marts'
 ORDER BY table_name;
 
 
--- =========================================================
 -- 1) SO SÁNH ROW COUNT: BI VS MART GỐC
--- =========================================================
 SELECT
     'bi_customer_360_row_count' AS check_name,
     (SELECT COUNT(*) FROM olist_sales_marts.bi_customer_360) AS bi_count,
@@ -79,9 +73,7 @@ SELECT
 ;
 
 
--- =========================================================
 -- 2) BI_CUSTOMER_360 CHECKS
--- =========================================================
 
 -- 2.1 customer_unique_id KHÔNG ĐƯỢC NULL
 SELECT
@@ -152,9 +144,7 @@ WHERE (total_orders > 1 AND is_repeat_customer <> 1)
    OR (total_orders <= 1 AND is_repeat_customer <> 0);
 
 
--- =========================================================
 -- 3) BI_DAILY_SALES_OVERVIEW CHECKS
--- =========================================================
 
 -- 3.1 order_date KHÔNG ĐƯỢC NULL
 SELECT
@@ -224,9 +214,7 @@ WHERE order_count < 0
    OR avg_order_value < 0;
 
 
--- =========================================================
 -- 4) BI_PRODUCT_PERFORMANCE CHECKS
--- =========================================================
 
 -- 4.1 product_id KHÔNG ĐƯỢC NULL
 SELECT
@@ -274,9 +262,7 @@ WHERE total_quantity < 0
    OR total_revenue < 0;
 
 
--- =========================================================
 -- 5) BI_SELLER_PERFORMANCE CHECKS
--- =========================================================
 
 -- 5.1 seller_id KHÔNG ĐƯỢC NULL
 SELECT
@@ -322,9 +308,7 @@ WHERE avg_review_score IS NOT NULL
   AND (avg_review_score < 1 OR avg_review_score > 5);
 
 
--- =========================================================
 -- 6) SAMPLE PREVIEW ĐỂ EYEBALL NHANH
--- =========================================================
 SELECT *
 FROM olist_sales_marts.bi_customer_360
 ORDER BY total_revenue DESC
