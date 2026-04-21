@@ -1,0 +1,22 @@
+project:
+  name: olist_sales_warehouse
+  env: dev
+
+paths:
+  local_data_dir: data/raw/olist
+  log_dir: logs
+
+aws:
+  region:
+  bucket_name:
+  s3_prefix_raw: raw/olist
+  s3_prefix_archive: archive/olist
+
+redshift:
+  schema_raw: raw_layer
+
+ingestion:
+  csv_delimiter: ","
+  encoding: utf-8
+  truncate_before_load: true
+  fail_on_missing_file: true
